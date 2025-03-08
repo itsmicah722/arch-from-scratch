@@ -1,31 +1,50 @@
 # Setup Guide
 
+Set a larger font. 
+```
+$ setfont ter-132b
+```
+
 ## WiFi
 
-Enter iwctl
+> **Note:** If you are using ethernet, skip this step. 
+
+Enter iwctl to connect to your network. 
 
 ```
 $ iwctl
 ```
 
-When inside, check for the name of your wireless devices.
+When inside, check for the name of your wireless devices. It most likely is called "wlan0" for Wi-Fi networks. 
 
 ```
-device list
+$ device list
 ```
 
-If your device name is wlan0, connect using the following command
+List current available connections. Use your wireless device name for "wlan0". 
 
 ```
-station wlan0 connect <SSID>
+$ station wlan0 scan
+$ station wlan0 get-networks
 ```
 
-Make sure to enter in your password
-
-exit when complete
+Connect to the "SSID" which is the name of your network queried by the previous command, and put the passphrase for that network as well. 
 
 ```
-exit
+$ station wlan0 connect "<SSID>" password "<PASSWORD>"
+```
+
+exit when complete.
+
+```
+$ exit
+```
+
+Run the following commands to see your IP address and comfirm you are connected to the internet via a ping to google. 
+
+```
+$ ip a
+$ ping google.com
 ```
 
 ## SSH
@@ -40,21 +59,6 @@ set a password for the current user
 
 ```
 $ passwd
-```
-
-## Write random data
-
-List blocks. In my case, my drives are nvme0n1 and nvme1n1. Your's might be the
-same, or the might be an sdx drive, such as sda or sdb.
-
-```
-$ lsblk
-```
-
-Write random data into your drive. 
-
-```
-$ dd if=/dev/urandom of=/dev/nvme0n1 status=progress bs=4096
 ```
 
 ## Partitioning Data
